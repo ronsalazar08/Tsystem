@@ -1,0 +1,18 @@
+{% extends "komax/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<br>
+<div class="m-5">
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+        <fieldset class="form-group p-4 border border-dark mx-auto rounded text-center w-50 " >
+            <legend class="text-center font-weight-bold h1" style="width: 150px;">Login</legend>
+            {{ form|crispy }}
+        </fieldset>
+        
+        <div class="form-group mx-auto m-2 text-center">
+            <button type="submit" class="btn btn-outline-dark w-25 shadow-lg">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

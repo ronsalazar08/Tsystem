@@ -1,0 +1,32 @@
+{% extends "komax/base.html" %}
+{% block content %}
+{% csrf_token %}
+
+<script type="text/javascript">
+    $.get("{% url 'auth' %}", function(resp){
+        if (resp == 'loggedIn'){
+            $("#lgend").show();
+            setTimeout(function() {
+                window.location.href="{% url 'login' %}"} ,2000
+            );
+        } else {
+            window.location.href="{% url 'login'%}";
+        }
+    });
+        
+</script>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="m-5">
+        <fieldset id="lgend" class="form-group p-4 border border-dark mx-auto rounded text-center w-50" style=" display: none">
+            <legend class="text-center font-weight-bold h1" style="width: 500px;">Logged Out</legend>
+            <div><span class="spinner-border"></span></div>
+        </fieldset>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,259 @@
+{% extends "komax/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <button id="btn_logout" class="btn btn-outline-danger font-weight-bold mr-1 pl-0 pr-0" style="position:absolute; top: 16px; right: 15px; width: 65px;">Logout</button>
+    <div class="container-flex m-3 p-0">
+
+      <table id="tablesum" class="text-center scroll table table-bordered shadow-lg table-striped font-weight-bold table-hover p-0 mx-auto w-75">
+            <thead class="thead-dark">
+              <tr>
+                <th colspan=8 class="text-center border-bottom-0 pb-3">TORRES TECHNOLOGY CENTER CORPORATION</th>
+              </tr>
+              <tr>
+                <th colspan=8 class="text-center border-bottom-0 border-top-0 pb-1 pt-1">SUMMARY OF WIRING HARNESS-{{customerS}}-KOMAX</th>
+              </tr>
+              <tr>
+                <th colspan=8 class="text-center border-bottom-0 border-top-0 pt-1">For the Month of <span id="monS_name"></span> {{yearS}}</th>
+              </tr>
+              <tr>
+                <th style="width:100px;" class="border-bottom-0 pb-1 text-center">D.R.</th>
+                <th style="width:95px;" class="border-bottom-0 pb-1 text-center">DATE</th>
+                <th style="width:125px;" class="border-bottom-0 pb-1 text-center">MODEL</th>
+                <th style="width:300px;" class="border-bottom-0 pb-1 text-center">PRODUCT</th>
+                <th style="width:100px;" class="border-bottom-0 pb-1 text-center">WOS</th>
+                <th style="width:80px;" class="border-bottom-0 pb-1 text-center">QTY.</th>
+                <th style="width:103px;" class="border-bottom-0 pb-1 text-center">SUB-</th>
+                <th style="width:95px;" class="border-bottom-0 pb-1 text-center">MAN</th>
+              </tr>
+              <tr>
+                <th style="width:100px;" class="border-top-0 pt-1 text-center">NO.</th>
+                <th style="width:95px;" class="border-top-0 pt-1 text-center"></th>
+                <th style="width:125px;" class="border-top-0 pt-1 text-center"></th>
+                <th style="width:300px;" class="border-top-0 pt-1 text-center">NUMBER</th>
+                <th style="width:100px;" class="border-top-0 pt-1 text-center">NO.</th>
+                <th style="width:80px;" class="border-top-0 pt-1 text-center"></th>
+                <th style="width:103px;" class="border-top-0 pt-1 text-center">TOTAL</th>
+                <th style="width:95px;" class="border-top-0 pt-1 text-center">CHARGE</th>
+              </tr>
+            </thead>
+            <tbody class="tableb ">
+            {% if items|length == 0 %}
+            <tr>
+                <td  class="text-center" style="font-size: 32px; font-weight: normal; width:997px;">
+                        <div>NO DATA TO DISPLAY</h1>
+                </td>
+            </tr>
+            {% endif %}
+            {% for item in items %}
+              {% if item.status == 'CLOSED' %}
+                <tr>
+                    <td style="width:100px;">{{item.cn}}</td>
+                    <td style="width:95px;">{{item.date_created|date:"m/d/y"}}</td>
+                    <td style="width:125px;">{{item.customer}}</td>
+                    <td style="width:300px;">{{item.product_no}}</td>
+                    <td style="width:100px;">{{item.wos_no}}</td>
+                    <td style="width:80px;" class="qty">{{item.quantity}}</td>
+                    <td style="width:103px;" class="subtot"></td>
+                    <td style="width:90px;"></td>
+                 </tr>
+              {% endif %}
+                 {% if forloop.last %}
+                 <tr>
+                    <td style="width:100px;"></td>
+                    <td style="width:95px;"></td>
+                    <td style="width:125px;"></td>
+                    <td style="width:300px; "></td>
+                    <td style="width:100px;"></td>
+                    <td style="width:80px;" class="font-weight-bolder" id="qty"></td>
+                    <td style="width:103px;" class="font-weight-bolder" id="subtot"></td>
+                    <td style="width:90px;" class="font-weight-bolder">TOTAL</td>
+                 </tr>
+                 {% endif %}
+            {% endfor %}
+             </tbody>
+      </table>
+    </div>
+
+    {% if items|length != 0 %}
+    <button type="button" class="btn btn-outline-primary font-weight-bold m-0" id="printSummary" onclick="tablesToExcel(['tablesum'], ['Sheet1'], 'myfile.xls')" style="position: absolute; bottom: 30px; right: 23px;">Download</button>
+     {% comment %} <button type="button" class="btn btn-primary font-weight-bold m-0" id="printSummary" style="position: absolute; bottom: 30px; right: 23px;">Print</button> {% endcomment %}
+    {% endif %}
+    <script type="text/javascript">
+        
+        $(document).ready(function() {
+            
+            var mn = mona('{{monS}}');
+            $('#monS_name').text(mn);
+            $("#btn_logout").click(function(){
+                window.location.href="{% url 'logout' %}";
+            });
+            
+            $('#tablesum tbody tr').each(function(){
+              var customer = $(this).find(':nth-child(3)').text();
+              
+              if (customer == 'GM') {
+                mc = 4
+              } else {
+                mc = 3.70
+              }
+              if (customer != "") {
+                $(this).find(':nth-child(8)').html(mc);
+              }
+            });
+            var holder = $('#tablesum tbody tr:first').find(':nth-child(1)').text();
+            
+            var sum = 0;
+            $('#tablesum tbody tr').each(function(){
+              
+              var cnum = $(this).find(':nth-child(1)').text();
+              if (cnum == holder){
+                  sum += parseInt($(this).find(':nth-child(6)').text());
+              } else if (cnum != holder) {
+
+                $(this).prev().find(':nth-child(7)').html(sum);
+                sum = parseInt($(this).find(':nth-child(6)').text());
+              }
+              holder = cnum;
+              
+            });
+
+            var qty = 0;
+            $(".qty").each(function() {
+                var value = $(this).text();
+                if(!isNaN(value) && value.length != 0) {
+                    qty += parseFloat(value);
+                }
+            });
+
+            var subtot = 0;
+            $(".subtot").each(function() {
+                var value = $(this).text();
+                if(!isNaN(value) && value.length != 0) {
+                    subtot += parseFloat(value);
+                }
+            });
+
+            $('#qty').html(qty);
+            $('#subtot').html(qty);
+
+            $("#printSummary").click(function(){
+                //fnExcelReport();
+                $(this).hide();
+            });
+        });
+
+          function mona(x){
+            switch(x){
+                case '01':
+                    mon = 'JANUARY';
+                    break;
+                case '02':
+                    mon = 'FEBRUARY';
+                    break;
+                case '03':
+                    mon = 'MARCH';
+                    break;
+                case '04':
+                    mon = 'APRIL';
+                    break;
+                case '05':
+                    mon = 'MAY';
+                    break;
+                case '06':
+                    mon = 'JUNE';
+                    break;
+                case '07':
+                    mon = 'JULY';
+                    break;
+                case '08':
+                    mon = 'AUGUST';
+                    break;
+                case '09':
+                    mon = 'SEPTEMBER';
+                    break;
+                case '10':
+                    mon = 'OCTOBER';
+                    break;
+                case '11':
+                    mon = 'NOVEMBER';
+                    break;
+                case '12':
+                    mon = 'DECEMBER';
+                    break;
+                default:
+            }
+            return mon;
+        }
+          function fnExcelReport() {
+            var table = document.getElementById('tablesum'); // id of table
+            var tableHTML = table.outerHTML;
+            var fileName = 'olo.xls';
+
+            var msie = window.navigator.userAgent.indexOf("MSIE ");
+
+            // If Internet Explorer
+            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+              dummyFrame.document.open('txt/html', 'replace');
+              dummyFrame.document.write(tableHTML);
+              dummyFrame.document.close();
+              dummyFrame.focus();
+              return dummyFrame.document.execCommand('SaveAs', true, fileName);
+            }
+            //other browsers
+            else {
+              var a = document.createElement('a');
+              tableHTML = tableHTML.replace(/  /g, '').replace(/ /g, '%20'); // replaces spaces
+              a.href = 'data:application/vnd.ms-excel,' + tableHTML;
+              a.setAttribute('download', fileName);
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            }
+          }
+           var tablesToExcel = (function () {
+              var uri = 'data:application/vnd.ms-excel;base64,'
+              , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets>'
+              , templateend = '</x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head>'
+              , body = '<body>'
+              , tablevar = '<table>{table'
+              , tablevarend = '}</table>'
+              , bodyend = '</body></html>'
+              , worksheet = '<x:ExcelWorksheet><x:Name>'
+              , worksheetend = '</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>'
+              , worksheetvar = '{worksheet'
+              , worksheetvarend = '}'
+              , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+              , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+              , wstemplate = ''
+              , tabletemplate = '';
+
+              return function (table, name, filename) {
+                  var tables = table;
+
+                  for (var i = 0; i < tables.length; ++i) {
+                      wstemplate += worksheet + worksheetvar + i + worksheetvarend + worksheetend;
+                      tabletemplate += tablevar + i + tablevarend;
+                  }
+
+                  var allTemplate = template + wstemplate + templateend;
+                  var allWorksheet = body + tabletemplate + bodyend;
+                  var allOfIt = allTemplate + allWorksheet;
+
+                  var ctx = {};
+                  for (var j = 0; j < tables.length; ++j) {
+                      ctx['worksheet' + j] = name[j];
+                  }
+
+                  for (var k = 0; k < tables.length; ++k) {
+                      var exceltable;
+                      if (!tables[k].nodeType) exceltable = document.getElementById(tables[k]);
+                      ctx['table' + k] = exceltable.innerHTML;
+                  }
+
+
+                  window.location.href = uri + base64(format(allOfIt, ctx));
+
+              }
+          })();
+  </script>
+{% endblock content %}

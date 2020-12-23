@@ -1,0 +1,286 @@
+
+html{
+    height: 96%;
+}
+/* background */
+.bg {
+    background-image: url("CTA.png");
+	background-color: rgba(255,255,255,0.7);
+    background-blend-mode: lighten;
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+}
+
+/* logo */
+#block_containerLogo{
+    text-align:center;
+}
+
+#bloc1Logo{
+    display:inline-block;
+	vertical-align:middle;
+}
+
+#bloc2Logo{	
+	vertical-align:middle;
+    display:inline-block;
+}
+
+#wrapD3Cube {
+    width: 40px;
+    height: 40px;
+    background-color: inherit;
+    display: inline-block;
+}
+
+#D3Cube {
+    width: 40px;
+    height: 40px;
+    transform-style: preserve-3d;
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    margin: auto;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+}
+
+#D3Cube > div {
+    position: absolute;
+    transition: all 0.5s ease-in-out;
+    width: 40px;
+    height: 40px;
+    float: left;
+    overflow: hidden;
+    opacity: 0.85;
+}
+
+#side1 {
+    transform: rotatex(90deg) translateX(0px) translateY(0px) translateZ(20px);
+   
+    background-color: #FFF;
+    background-image: url(ttech_logo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border: solid 1px white;
+}
+#side2 {
+    transform: rotateY(-90deg) translateX(0px) translateY(0px) translateZ(20px);
+  
+    background-color: #ffaf1c;
+    background-image: url(ttech_logo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border: solid 1px white;
+}
+#side3 {
+    transform: translateX(0px) translateY(0px) translateZ(20px);
+  
+    background-color: #58d568; 
+    background-image: url(ttech_logo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border: solid 1px white;
+}
+#side4 {
+    transform: rotateY(90deg) translateX(0px) translateY(0px) translateZ(20px);
+ 
+    background-color: #ed3030;
+    background-image: url(ttech_logo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border: solid 1px white;
+}
+#side5 {
+    transform: rotateY(180deg) translateX(0px) translateY(0px) translateZ(20px);
+    -moz-transform: rotateY(180deg) translateX(0px) translateY(0px) translateZ(20px);
+    -webkit-transform: rotateY(180deg) translateX(0px) translateY(0px) translateZ(20px);
+    background-color: #1c5ffe;
+    background-image: url(ttech_logo.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border: solid 1px white;
+}
+#side6 {
+    transform: rotateX(-90deg) translateX(0px) translateY(0px) translateZ(20px);
+    background-color: #f2f215;
+	background-image: url(ttech_logo.png);
+    background-position: center;
+	background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border: solid 1px white;
+    background-color: white;
+}
+
+
+#D3Cube {
+    animation: cubeRotation 12s infinite linear;
+}
+@keyframes cubeRotation {
+  
+    0%   { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);  }
+    15%  { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);  }
+    30%  { transform: rotateX(-20deg) rotateY(180deg) rotateZ(0deg);  }
+    45%  { transform: rotateX(20deg) rotateY(360deg) rotateZ(0deg);  }
+    60%  { transform: rotateX(0deg) rotateY(540deg) rotateZ(0deg);  }
+    75%  { transform: rotateX(45deg) rotateY(720deg) rotateZ(360deg); }
+    100%  { transform: rotateX(0deg) rotateY(1080deg) rotateZ(720deg); }
+    
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: inherit; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+.nav-tabs .nav-link:not(.active) {
+    border-color: transparent !important;
+}
+
+.tab-content {
+    border-left: 1px solid black ; 
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.nav-tabs>.nav-item>.active, .nav-tabs>.nav-item>.active:hover, .nav-tabs>.nav-item>.active:focus {
+    border-color: black;
+    border-bottom-color: transparent;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid black;
+}
+
+
+table.scroll {
+    width: 100%; /* Optional */
+    /* border-collapse: collapse; */
+}
+
+table.scroll tbody,
+table.scroll thead { display: block; }
+
+thead tr th { 
+    height: 10px;
+    line-height: 10px;
+    text-align: left;
+}
+
+#table.scroll tbody {
+    height: 440px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#tabledr.scroll tbody {
+    height: 388px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#tablesum.scroll tbody {
+    height: 380px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* tbody { border-top: 2px solid black; } */
+
+#table tbody td, #table thead th {
+    width: 249px; /* Optional */
+    /* overflow: hidden; */
+}
+
+tbody td:last-child, thead th:last-child {
+    border-right: none;
+    
+}
+
+.PIlink:focus{
+    color: red;
+}
+
+.PIdd:hover{
+    color: dodgerblue;
+    font-weight: bold;
+}
+.PIdd:active, .PIdd:focus{
+    color: white;
+    font-weight: bold;
+}
+
+input[type=search]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: rgba(142, 147, 175, 0.411);
+  }
+
+
+.form-check{
+    display: inline-block;
+    margin-left: 54px;
+    margin-right: 54px;
+    font-weight: Bold;
+}
+@media print{
+    @page {size: landscape}
+
+    #side3 { 
+        border: 0;
+    }
+    #side1, #side2, #side4, #side5, #side6, #myInput { 
+        display: none;
+    }
+
+    #D3Cube { 
+        animation: cubeRotation 0s infinite linear; 
+    }
+    .bg  { 
+        background-image: url(""); 
+    }
+    .container {
+        display: inline;
+    }
+}
+
+
+#controlDiv {
+    pointer-events: none;
+    
+}
+
+
+.jumbotron {
+    background: none;
+}

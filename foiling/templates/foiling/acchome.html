@@ -1,0 +1,69 @@
+{% extends "komax/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <button id="btn_logout" class="btn btn-outline-danger font-weight-bold mr-1 pl-0 pr-0" style="position:absolute; top: 16px; right: 15px; width: 65px;">Logout</button>
+    <br><br><br><br>
+<div class="m-5">
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+        <fieldset class="form-group p-4 border border-dark mx-auto rounded text-center w-50 " >
+            <legend class="text-center font-weight-bold h1" style="width: 450px;">TWISTING & FOILING Summary</legend>
+            <div class="row">
+                <div class="col-4">
+                    <div>Customer*</div>
+                    <select name="customerS" class="dropdown-primary  form-control font-weight-bold text-center text-dark">
+                        <option value="GM">GM</option>
+                        <option value="P552(14405-DOOR)">P552(14405-DOOR)</option>
+                        <option value="P552(14405-FRAME)">P552(14405-FRAME)</option>
+                        <option value="P552(14401-IP)">P552(14401-IP)</option>
+                        <option value="V363N">V363N</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <div>Month*</div>
+                    <select id="smon" name="monS" class="dropdown-primary  form-control font-weight-bold text-center text-dark">
+                        <option value="01">JANUARY</option>
+                        <option value="02">FEBRUARY</option>
+                        <option value="03">MARCH</option>
+                        <option value="04">APRIL</option>
+                        <option value="05">MAY</option>
+                        <option value="06">JUNE</option>
+                        <option value="07">JULY</option>
+                        <option value="08">AUGUST</option>
+                        <option value="09">SEPTEMBER</option>
+                        <option value="10">OCTOBER</option>
+                        <option value="11">NOVEMBER</option>
+                        <option value="12">DECEMBER</option>
+                    </select>
+                </div>
+                <div class="col-4">
+                    <div>Date*</div>
+                    <select name="yearS" class="dropdown-primary  form-control font-weight-bold text-center text-dark">
+                    {% now 'Y' as cur_year %}
+                        <option value="{{cur_year}}">{{cur_year}}</option>
+                        <option value="{{ cur_year|add:"-1" }}">{{ cur_year|add:"-1" }}</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group mx-auto m-2 text-center">
+            <button type="submit"  class="btn btn-outline-dark w-25 shadow-lg">Submit</button>
+        </div>
+    </form>
+        
+</div>
+     <script>
+     
+        $(document).ready(function() {
+            $("#btn_logout").click(function(){
+                window.location.href="{% url 'logout' %}";
+            });
+            var d = new Date();
+            var n = d.getMonth();
+            if (n < 11) {
+                n = "0"+ (n+1)
+            }
+            $("#smon").val(n);
+        });
+  </script>
+{% endblock content %}

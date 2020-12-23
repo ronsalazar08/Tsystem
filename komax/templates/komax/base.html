@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+         <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'komax/style.css' %}" media="screen">
+        <link rel="stylesheet" type="text/css" href="{% static 'komax/style1.css' %}" media="print">
+        <link rel="icon" type="image/png" href="{% static 'komax/logo.gif' %}">
+        <title> &#65279; </title>
+    </head>
+    <body class="bg"  onafterprint="afterPrint()" oncontextmenu="return false">
+        <center>
+            <div id="block_containerLogo" class="border border-dark ml-3 mr-3 mt-2 pt-2 border-right-0 border-left-0 "> 
+                <div id="bloc1Logo" class="align-top">
+                    <div id="wrapD3Cube">
+                        <div id="D3Cube">
+                            <div id="side1"></div>
+                            <div id="side2"></div>
+                            <div id="side3"></div>
+                            <div id="side4"></div>
+                            <div id="side5"></div>
+                            <div id="side6"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="bloc2Logo" class="align-top">
+                    <b><font size="5" >TORRES TECHNOLOGY CENTER CORPORATION</font></b>
+                </div>
+            </div>
+        </center>
+        
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/overcast/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="{% static 'komax/main.js' %}"></script>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div id="alertdiv" class="w-25 p-2 alert alert-{{ message.tags }}" style="text-align: center; font-weight: bold; height: 40px; position: absolute; top: 78px; right: 509px; z-index: 10;">
+                    {{message}}
+                </div>
+                <script>
+                    $(document).ready(function(){
+                        $("#alertdiv").fadeOut(5000);
+                    });
+                </script>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        
+        {% endblock %}
+        
+
+        <script type="text/javascript">
+            {% comment %} $("#bloc1Logo").click(function(){
+                location.href="{% url 'Homepage' %}";
+            }); {% endcomment %}
+            $(document).on('keydown', function(e) {
+                if(e.ctrlKey && (e.key == "p" || e.charCode == 16 || e.charCode == 112 || e.keyCode == 80) ){
+                    /*alert("Please use the Print PDF button below for a better rendering on the document");*/
+                    e.cancelBubble = true;
+                    e.preventDefault();
+
+                    e.stopImmediatePropagation();
+                }  
+            });
+        </script>
+    </body>
+</html>

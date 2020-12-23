@@ -1,0 +1,268 @@
+{% extends "komax/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+        
+    <button id="btn_print" class="btn btn-outline-danger font-weight-bold mr-1 pl-0 pr-0" style="position:absolute; top: 16px; right: 16px; width: 65px;">Print</button>
+    
+    <div id="mainDrdiv" class="container-flex m-3 pl-1 pr-1 border border-dark rounded" style="height: 565px;">
+
+        <form method="POST" autocomplete="off">
+        <div class="row">
+                {% csrf_token %}
+                <div class="col-3">
+                    {{ form.control_no|as_crispy_field }}
+                </div>
+                <div class="col-4">
+                    <div class="row m-0">
+                        <div class="col-5 m-0 p-0 pr-3">
+                            {{ form.customer|as_crispy_field }}
+                        </div>
+                        <div class="col-7 m-0 p-0 pl-3">
+                            {{ form.line|as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    {{ form.date_created|as_crispy_field }}
+                </div>
+                <div class="col-3">
+                    {{ form.status|as_crispy_field }}
+                </div>
+        </div>
+            <input type="hidden" name="form_ctrl" value="dr_form">
+            <button type="submit" class="btn btn-outline-primary font-weight-bold m-0" id="donedr" style="position: absolute; bottom: 30px; right: 23px;">Done</button>
+        </form>
+        
+         <table id="tabledr" class="scroll table table-bordered shadow-lg table-striped font-weight-bold table-hover p-0 mx-auto w-75">
+            <thead class="thead-dark">
+              <tr>
+                <th class="border-bottom-0 pb-0" style="width: 72px;">SEQ.</th>
+                <th class="border-bottom-0 pb-0" style="width: 300px;">PRODUCT</th>
+                <th class="border-bottom-0 pb-0" style="width: 150px;">WOS</th>
+                <th class="text-center" colspan=5 >QUANTITY</th>
+              </tr>
+              <tr>
+                <th class="border-top-0 pt-0" style="width: 72px;">NO.</th>
+                <th class="border-top-0 pt-0" style="width: 300px;">NO.</th>
+                <th class="border-top-0 pt-0" style="width: 150px;">NO.</th>
+                <th class="border-top-0" style="width: 93px;">1ST</th>
+                <th class="border-top-0" style="width: 93px;">2ND</th>
+                <th class="border-top-0" style="width: 93px;">3RD</th>
+                <th class="border-top-0" style="width: 93px;">4TH</th>
+                <th class="border-top-0" style="width: 93px;">5TH</th>
+              </tr>
+            </thead>
+            <tbody >
+            {% for item in items %}
+                <tr>
+                    <td id="seqtd" style="width: 72px; text-align:right;"></td>
+                    <td id="prodtd" style="width: 300px;">
+                    <div class="dropdown dropright">
+                        <a href="#" class="PIlink" data-toggle="dropdown">{{item.product_no}}<a>
+                        <div class="dropdown-menu p-0 m-0 text-center">
+                        {% url 'kedititem' id=item.id as edititem_url %}
+                        {% url 'kdeleteitem' id=item.id as deleteitem_url %} 
+                        <a class="PIdd dropdown-item border border-top-0 border-left-0 border-right-0" href="{{ edititem_url }}">Edit</a>
+                        <a class="PIdd dropdown-item border border-top-0 border-left-0 border-right-0 border-bottom-0" href="{{ deleteitem_url }}">Delete</a>
+                        </div>
+                    </div>
+                    </td>
+                    <td id="wostd" style="width: 150px;" >{{item.wos_no}}</td>
+                    <td id="firsttd" style="width: 93px;" class="S">{{item.first_quantity}}</td>
+                    <td id="secondtd" style="width: 93px;" class="S">{{item.second_quantity}}</td>
+                    <td id="thirdtd" style="width: 93px;" class="S">{{item.third_quantity}}</td>
+                    <td id="fourthtd" style="width: 93px;" class="S">{{item.fourth_quantity}}</td>
+                    <td id="fifthtd" style="width: 93px;" class="S">{{item.fifth_quantity}}</td>
+                 </tr>
+            {% endfor %}
+             </tbody>
+      </table>
+      <!-- The Modal -->
+        <div class="modal fade" id="myModal">
+            <br><br><br>
+            <div class="modal-dialog ">
+                <div class="modal-content" >
+                
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">New Item</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form method="POST" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="form-group" >
+                                <div class="row">
+                                    <div class="col-6">
+                                        {{ form1.product_no|as_crispy_field }}
+                                        {{ form1.wos_no|as_crispy_field }}
+                                    </div>
+                                    <div class="col-6" id="controlDiv">
+                                        {{ form1.control_noFK|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1">
+                                    </div>
+                                    <div class="col-2">
+                                        {{ form1.first_quantity|as_crispy_field }}
+                                    </div>
+                                    <div class="col-2">
+                                        {{ form1.second_quantity|as_crispy_field }}
+                                    </div>
+                                    <div class="col-2">
+                                        {{ form1.third_quantity|as_crispy_field }}
+                                    </div>
+                                    <div class="col-2">
+                                        {{ form1.fourth_quantity|as_crispy_field }}
+                                    </div>
+                                    <div class="col-2">
+                                        {{ form1.fifth_quantity|as_crispy_field }}
+                                    </div>
+                                    <div class="col-1">
+                                    </div>
+                                </div>
+                            </div>
+
+                        
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                            <input type="hidden" name="form_ctrl" value="dr_item">
+                            <button type="submit" class="btn btn-outline-success font-weight-bold" id="createdr">Create</button>
+                        </form>
+                        <button type="button" class="btn btn-outline-danger font-weight-bold" data-dismiss="modal">Close</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <button id="btn_newItem" class="btn btn-outline-success font-weight-bold m-0" style="position: absolute; bottom: 30px; right: 95px;" data-toggle="modal" data-target="#myModal">+ Add</button>
+    </div>
+    <div id="remarks_div" style="display: none; position: absolute; top:305px; left:750px; font-size: 24px;"></div>
+    <div id="date_div" style="display: none; position: absolute; top:190px; left:780px; "></div>
+    <div id="customer_div" style="display: none; position: absolute; top:190px; left:120px;"></div>
+    
+
+
+
+
+    <!-- The Modal -->
+        <div class="modal fade" id="myModal1" data-keyboard="false" data-backdrop="static">
+            <br><br><br><br><br><br><br><br>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" >
+                
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Printing Confirmation!</h4>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="font-weight-bold text-dark" style="font-size:32px;" >Did you print the document properly?</div>
+                        
+                        
+                        
+                    </div>
+                        <div class="text-danger text-center p-0 m-0">*Please answer correctly.</div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer text-center">
+                        <div class="mx-auto">
+                            <button type="button" class="btn btn-outline-success font-weight-bold" data-dismiss="modal" id="printy">YES</button>
+                            <span class="text-danger">or</span>
+                            <button type="button" class="btn btn-outline-danger font-weight-bold" data-dismiss="modal" id="printn">NO</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+     <script>
+     
+        $(document).ready(function() {
+            $('#id_date_created').datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+
+            $('table tbody tr').each(function(idx){
+                $(this).children(":eq(0)").html(idx + 1);
+            });
+
+            val = $('#id_control_no').val();
+            $('#id_control_noFK').val(val);
+            $('#id_control_noFK').attr('tabIndex', -1);
+            
+            var S = 0;
+            $(".S").each(function() {
+                var value = $(this).text();
+                if(!isNaN(value) && value.length != 0) {
+                    S += parseFloat(value);
+                }
+            });
+
+            
+
+            var rowCount = $('tbody tr').length;
+            if (rowCount > 9){
+                $('#btn_newItem').prop('disabled', true);
+            } else if (rowCount < 1){
+                $('#btn_print').prop('disabled', true);
+            } else {
+                $('#btn_newItem').prop('disabled', false);
+            }
+            $('#id_control_no').prop('disabled', true);
+           
+            if ($('#id_status').val() == "WAITING") {
+                $('#id_date_created').prop('disabled', true);
+                $('#id_customer').prop('disabled', true);
+                $('#id_line').prop('disabled', true);
+                $('#btn_newItem').prop('disabled', true);
+                $('a').prop('disabled', true);
+                $("#id_status option[value='OPEN']").attr('disabled','disabled');
+                $("#btn_print").attr('disabled','disabled');
+            } else if ($('#id_status').val() == "CLOSED") {
+                $('#id_date_created').prop('disabled', true);
+                $('#id_customer').prop('disabled', true);
+                $('#id_line').prop('disabled', true);
+                $('#btn_newItem').prop('disabled', true);
+                $('a').prop('disabled', true);
+                $("#id_status").attr('disabled','disabled');
+                $("#btn_print").attr('disabled','disabled');
+            } else if ($('#id_status').val() == "OPEN") {
+                $('#id_status').prop('disabled', true);
+            }
+
+            $('form').on('submit', function(){
+                $('#id_control_no').prop('disabled', false);
+                $('#id_date_created').prop('disabled', false);
+                $('#id_customer').prop('disabled', false);
+                $('#id_status').prop('disabled', false);
+                $('#id_line').prop('disabled', false);
+            });
+
+            $('#btn_print').on('click', function() {  
+                var datep =new Date($('#id_date_created').val());
+                var cusp =$("#id_customer").val() + " - " + $("#id_line").val();
+                $('#remarks_div').text("TOTAL: " + S);
+                $('#date_div').text(datep.getMonth()+1 + "-" + datep.getDate() + "-" + datep.getFullYear());
+                $('#customer_div').text(cusp);
+                window.print();  
+            });
+
+            $('#printy').on('click', function(){
+                $("#id_status").val("WAITING");
+                $( "#donedr" ).trigger( "click" );
+            });
+        });
+
+        function afterPrint(){
+            $('#myModal1').modal();
+        }
+        
+  </script>
+{% endblock content %}

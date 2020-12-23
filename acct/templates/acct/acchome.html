@@ -1,0 +1,40 @@
+{% extends "komax/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <button id="btn_logout" class="btn btn-outline-danger font-weight-bold mr-1 pl-0 pr-0" style="position:absolute; top: 16px; right: 15px; width: 65px;">Logout</button>
+    <br><br><br><br>
+<div class="m-5">
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+        <fieldset class="form-group p-4 border border-dark mx-auto rounded text-center w-50 " >
+            <legend class="text-center font-weight-bold h1" style="width: 450px;">WIRING HARNESS Summary</legend>
+            
+                <div>
+                    <div>Department*</div>
+                    <select name="dept" class="dropdown-primary  form-control font-weight-bold text-center text-dark">
+                        <option value="KOMAX">KOMAX</option>
+                        <option value="FOILING">TWISTING & FOILING</option>
+                    </select>
+                </div>
+        </fieldset>
+        <div class="form-group mx-auto m-2 text-center">
+            <button type="submit"  class="btn btn-outline-dark w-25 shadow-lg">Submit</button>
+        </div>
+    </form>
+        
+</div>
+     <script>
+     
+        $(document).ready(function() {
+            $("#btn_logout").click(function(){
+                window.location.href="{% url 'logout' %}";
+            });
+            var d = new Date();
+            var n = d.getMonth();
+            if (n < 11) {
+                n = "0"+ (n+1)
+            }
+            $("#smon").val(n);
+        });
+  </script>
+{% endblock content %}

@@ -1,0 +1,80 @@
+{% extends "komax/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container-flex m-3 pr-1 pl-1 border border-dark rounded" style="height: 565px;">
+    <!-- The Modal -->
+        <div class="modal fade" id="myModal" data-keyboard="false" data-backdrop="static">
+            <br><br><br>
+            <div class="modal-dialog modal">
+                <div class="modal-content" >
+                
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Item</h4>
+                        <!--<button type="button" class="close" data-dismiss="modal">×</button>-->
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form method="POST" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="form-group" >
+                                <div class="row">
+                                    <div class="col-6">
+                                        {{ form1.product_no|as_crispy_field }}
+                                        {{ form1.wos_no|as_crispy_field }}
+                                    </div>
+                                    <div class="col-6" id="controlDiv">
+                                        {{ form1.control_noFK|as_crispy_field }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1">
+                                    </div>
+                                    <div class="col-2">
+                                        {{ form1.first_quantity|as_crispy_field }}
+                                    </div>
+                                    <div class="col-2">
+                                        {{ form1.second_quantity|as_crispy_field }}
+                                    </div>
+                                    <div class="col-2">
+                                        {{ form1.third_quantity|as_crispy_field }}
+                                    </div>
+                                    <div class="col-2">
+                                        {{ form1.fourth_quantity|as_crispy_field }}
+                                    </div>
+                                    <div class="col-2">
+                                        {{ form1.fifth_quantity|as_crispy_field }}
+                                    </div>
+                                    <div class="col-1">
+                                    </div>
+                                </div>
+                            </div>
+
+                        
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                            <input type="hidden" name="form_ctrl" value="dr_item">
+                            <button type="submit" class="btn btn-outline-success font-weight-bold" id="createdr">Submit</button>
+                        </form>
+                        <button type="button" class="btn btn-outline-danger font-weight-bold" data-dismiss="modal" id="btn_close">Close</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+     <script>
+     
+        $(document).ready(function() {
+            
+            $('#id_control_noFK').attr('tabIndex', -1);
+            $('.modal').modal('show');
+            $('#btn_close').click(function(){
+                window.history.back();
+            });
+        });
+  </script>
+{% endblock content %}

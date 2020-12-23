@@ -1,0 +1,120 @@
+{% extends "komax/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <button id="btn_logout" class="btn btn-outline-danger font-weight-bold mr-1 pl-0 pr-0" style="position:absolute; top: 16px; right: 15px; width: 65px;">Logout</button>
+    <div class="container-flex m-3 p-0">
+        <button id="btn_create" class="btn btn-outline-success font-weight-bold m-0" data-toggle="modal" data-target="#myModal">+ New DR</button>
+        <input type="search" id="myInput" placeholder="Search.." style="text-align: center; font-weight: bold; color: black; width: 250px; display: inline-block; float: right" class="textinput textInput form-control" autofocus>
+        {% comment %} <select id="select_status" class="dropdown-primary  form-control font-weight-bold text-center text-dark mr-3" style="width: 150px; float:right;">
+            <option value="OPEN" selected>OPEN</option>
+            <option value="WAITING">WAITING</option>
+            <option value="CLOSED">CLOSED</option>
+        </select> {% endcomment %}
+        
+        <br>
+        <br>
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal">
+            <br>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">New Delivery Reciept</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form method="POST" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.date_created|as_crispy_field }}
+                                {{ form.control_no|as_crispy_field }}
+                                {{ form.customer|as_crispy_field }}
+                                {{ form.line|as_crispy_field }}
+                            </div>
+
+                        
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                            <button type="submit" class="btn btn-outline-success font-weight-bold" id="createdr">Create</button>
+                        </form>
+                        <button type="button" class="btn btn-outline-danger font-weight-bold" data-dismiss="modal">Close</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <table id="table" class="scroll table table-striped table-bordered font-weight-bold table-hover p-0 mx-auto w-75 shadow-lg">
+            <thead class="thead-dark">
+              <tr>
+                <th>CONTROL NO.</th>
+                <th>DATE</th>
+                <th>CUSTOMER</th>
+                <th>STATUS</th>
+              </tr>
+            </thead>
+            <tbody class="tableb">
+            {% if dr_form|length == 0 %}
+            <tr>
+                <td class="text-center" style="font-size: 32px; font-weight: normal; width: 996px;">
+                        <div>NO DELIVERY RECIEPT TO DISPLAY</h1>
+                </td>
+            </tr>
+            {% endif %}
+            {% for dr in dr_form %}
+                <tr>
+                    <td>
+                    <div class="dropdown dropright">
+                        <a href="#" class="PIlink" data-toggle="dropdown">{{dr.control_no}}<a>
+                        <div class="dropdown-menu p-0 m-0 text-center">
+                        {% url 'feditdr' cnum=dr.control_no as edit_url %} 
+                        <a class="PIdd dropdown-item border border-top-0 border-left-0 border-right-0" href="{{ edit_url }}">Edit</a>
+                        {% if dr.status == 'OPEN' %}
+                            {% url 'fdeletedr' cnum=dr.control_no as delete_url %}
+                            <a class="PIdd dropdown-item border border-top-0 border-left-0 border-right-0 border-bottom-0" href="{{ delete_url }}">Delete</a>
+                        {% else %}
+                            {% url 'fclosedr' cnum=dr.control_no as closedr_url %}
+                            <a class="PIdd dropdown-item border border-top-0 border-left-0 border-right-0 border-bottom-0" href="{{ closedr_url }}">Close</a>
+                        {% endif %}
+                        </div>
+                    </div>
+                    </td>
+                    <td>{{dr.date_created|date:"Y-m-d"}}</td>
+                    <td>{{dr.customer}} - {{dr.line}}</td>
+                    <td>{{dr.status}}</td>
+                 </tr>
+            {% endfor %}
+             </tbody>
+      </table>
+    </div>
+     <script>
+     
+        $(document).ready(function() {
+            $("#btn_logout").click(function(){
+                window.location.href="{% url 'logout' %}";
+            });
+            $('#id_date_created').datepicker({
+                dateFormat: 'yy-mm-dd'
+                
+            });
+            $("#myInput").on("keyup search", function() {
+                var value = $(this).val().toLowerCase();
+                $(".tableb tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+            {% comment %} $('#select_status').change(function(){
+                var value = $(this).val().toLowerCase();
+                $(".tableb tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            }); {% endcomment %}
+        });
+  </script>
+{% endblock content %}

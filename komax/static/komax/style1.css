@@ -1,0 +1,138 @@
+@media print{
+    html{
+        height: 100%;
+    }
+    #btn_newItem, 
+    #donedr, 
+    #block_containerLogo,
+    form,th,
+    #btn_print{
+        display:none;
+    }
+
+    *{
+        font-family: "Arial";
+        font-weight: normal;
+        color: black !important;
+        -webkit-box-shadow: none !important;
+        -webkit-border: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        text-decoration: none !important;
+    }
+
+    table, table td{
+        padding: 0px !important;
+    }
+    table{
+        position: absolute !important;
+        top: 258px !important;
+        left: -72px !important;
+    }
+    
+    div{
+         border: none !important;
+    }
+    
+    @page {size: portrait}
+    #remarks_div, #customer_div, #date_div{
+        display: block !important;
+    }
+    #tabledr, #mainDrdiv{
+        outline: none !important;
+        border: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+    }
+    #seqtd{
+        color: transparent !important;
+        width: 25% !important;
+        overflow: hidden !important;
+        border: 0 !important;
+     }
+    #prodtd{
+        overflow: hidden !important;
+        font-size: 14px !important;
+        border: 0 !important;
+        
+    } 
+    #wostd{
+        /* border: solid 1px black !important; */
+        width: 10% !important;
+        overflow: hidden !important;
+        font-size: 14px !important;
+        border: 0 !important;
+    }
+    #firsttd{
+        /* border: solid 1px black !important; */
+        width: 7% !important;
+        overflow: hidden !important;
+        font-size: 14px !important;
+        border: 0 !important;
+    }
+    #secondtd{
+        /* border: solid 1px black !important; */
+        width: 7% !important;
+        overflow: hidden !important;
+        padding-left: 1px !important;
+        font-size: 14px !important;
+        border: 0 !important;
+    }
+    #thirdtd{
+        /* border: solid 1px black !important; */
+        width: 7% !important;
+        overflow: hidden !important;
+        padding-left: 10px !important ;
+        font-size: 14px !important;
+        border: 0 !important;
+    }
+    #fourthtd{
+        /* border: solid 1px black !important; */
+        width: 7% !important;
+        overflow: hidden !important;
+        padding-left: 15px !important ;
+        font-size: 14px !important;
+        border: 0 !important;
+    }
+    #fifthtd{
+        /* border: solid 1px black !important; */
+        width: 7% !important;
+        overflow: hidden !important;
+        padding-left: 25px !important ;
+        font-size: 14px !important;
+        border: 0 !important;
+    }
+
+    /* td:nth-child(1) {  
+        color: white !important;
+        width: 100px !important;
+    }
+    td:nth-child(2) {  
+        overflow: hidden !important;
+        width: 150px !important;
+    }
+    td:nth-child(3) {  
+        overflow: hidden !important;
+        width: 60px !important;
+    }
+    td:nth-child(4) {  
+        overflow: hidden !important;
+        width: 50px !important;
+    }
+    td:nth-child(5) {  
+        overflow: hidden !important;
+        width: 50px !important;
+    }
+    td:nth-child(6) {  
+        overflow: hidden !important;
+        width: 40px !important;
+    }
+    td:nth-child(7) {  
+        overflow: hidden !important;
+        width: 40px !important;
+    }
+    td:nth-child(8) {  
+        overflow: hidden !important;
+        width: 40px !important;
+    } */
+}
