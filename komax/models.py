@@ -6,7 +6,7 @@ class dr_form(models.Model):
     date_created = models.DateField(default=timezone.now)
     control_no = models.IntegerField(unique=True)
     customer = models.CharField(max_length=50)
-    line = models.CharField(max_length=50, default='')
+    line = models.CharField(max_length=50, default='LINE')
     status = models.CharField(max_length=20, default='OPEN')
     
     def __str__(self):

@@ -17,9 +17,9 @@ class Drforms(admin.ModelAdmin):
     list_display = ( 'control_no', 'customer', 'date_created', 'status')
 
     search_fields = ['control_no', 'control_no']
-    
     # define filter columns list, then a filter widget will be shown at right side of Department list page.
-    list_filter = ['control_no', 'customer']
+    list_filter = ['customer']
+    # list_filter = ['control_no', 'customer']
     # define which field will be pre populated.
     #prepopulated_fields = {'dept_name': ('dept_name',)}
     # define model data list ordering.
@@ -31,9 +31,10 @@ class Dritems(admin.ModelAdmin):
     list_display = ( 'product_no', 'wos_no', 'first_quantity', 'second_quantity', 'third_quantity', 'fourth_quantity', 'fifth_quantity', 'control_noFK')
 
     search_fields = ['product_no', 'wos_no']
+    raw_id_fields = ['control_noFK',]
     
     # define filter columns list, then a filter widget will be shown at right side of Department list page.
-    list_filter = ['product_no', 'wos_no']
+    # list_filter = ['product_no', 'wos_no']
     # define which field will be pre populated.
     #prepopulated_fields = {'dept_name': ('dept_name',)}
     # define model data list ordering.

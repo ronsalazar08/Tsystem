@@ -37,14 +37,28 @@ def Logout(request):
 #@user_passes_test(dr_group, login_url='acchome')
 def KHomepage(request):
     if request.method == 'POST':
-        form = NewDrForm(request.POST)
-        if form.is_valid():
-            olo = form.cleaned_data['control_no']
-            form.save()
-            return redirect(f'/komax/editdr/{olo}')
-        else:
-            messages.warning(request, "Canceled: Control Number already exist!")
-
+        if request.POST.get('form_ctrl') == "new_dr":
+            form = NewDrForm(request.POST)
+            if form.is_valid():
+                olo = form.cleaned_data['control_no']
+                form.save()
+                return redirect(f'/komax/editdr/{olo}')
+            else:
+                messages.warning(request, "Canceled: Control Number already exist!")
+        if request.POST.get('form_ctrl') == "rename_dr":
+            form = NewDrForm(request.POST)
+            if form.is_valid():
+                olo = form.cleaned_data['control_no']
+                form.save()
+                old_dr = request.POST.get('old_dr')
+                new_dr = request.POST.get('control_no')
+                n_dr = dr_form.objects.get(control_no=new_dr)
+                o_dr_items = dr_item.objects.filter(control_noFK=old_dr)
+                o_dr_items.update(control_noFK=n_dr)
+                dr_form.objects.get(control_no=old_dr).delete()
+                return redirect(f'/komax/editdr/{olo}')
+            else:
+                messages.warning(request, "Canceled: Control Number already exist!")
     else:
         form = NewDrForm()
     context = {
@@ -67,21 +81,27 @@ def DeleteDR(request, cnum):
     return redirect('KHomepage')
     
 def EditDR(request, cnum):
-    if request.method == 'POST' and request.POST.get('form_ctrl') == "dr_form":
-        form = NewDrForm(request.POST, instance=dr_form.objects.filter(control_no=cnum).get(control_no=cnum))
-        form1 = NewDrItem()
-        if form.is_valid():
-            form.save()
-            return redirect('KHomepage')
+    if request.method == 'POST':
+        if request.POST.get('form_ctrl') == "dr_form":
+            form = NewDrForm(request.POST, instance=dr_form.objects.get(control_no=cnum))
+            # form = NewDrForm(request.POST, instance=dr_form.objects.filter(control_no=cnum).get(control_no=cnum))
+            form1 = NewDrItem()
+            if form.is_valid():
+                form.save()
+                return redirect('KHomepage')
 
-    elif request.method == 'POST' and request.POST.get('form_ctrl') == "dr_item":
-        form1 = NewDrItem(request.POST)
-        if form1.is_valid():
-            cnum=form1.cleaned_data['control_noFK']
-            form1.save()
-            return redirect(f'/komax/editdr/{cnum}')
+        elif request.POST.get('form_ctrl') == "dr_item":
+            form = NewDrForm(instance=dr_form.objects.get(control_no=cnum))
+            form1 = NewDrItem(request.POST)
+            new_form1 = form1.save(commit=False)
+            new_form1.control_noFK = dr_form.objects.get(control_no=cnum)
+            if form1.is_valid():
+                # cnum=form1.cleaned_data['control_noFK']
+                form1.save()
+                return redirect(f'/komax/editdr/{cnum}')
     else:
-        form = NewDrForm(instance=dr_form.objects.filter(control_no=cnum).get(control_no=cnum))
+        form = NewDrForm(instance=dr_form.objects.get(control_no=cnum))
+        # form = NewDrForm(instance=dr_form.objects.filter(control_no=cnum).get(control_no=cnum))
         form1 = NewDrItem()
     context = {
         'form'  :   form,
@@ -99,6 +119,10 @@ def DeleteITEM(request, id):
 def EditItem(request, id):
     if request.method == 'POST':
         form1 = NewDrItem(request.POST, instance=dr_item.objects.get(id=id))
+        cnum = dr_item.objects.get(id=id)
+        print(cnum.control_noFK)
+        new_form1 = form1.save(commit=False)
+        new_form1.control_noFK = dr_form.objects.get(control_no=f'{cnum.control_noFK}')
         if form1.is_valid():
             cnum=dr_item.objects.get(id=id).control_noFK
             form1.save()

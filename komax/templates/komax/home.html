@@ -4,7 +4,7 @@
     <button id="btn_logout" class="btn btn-outline-danger font-weight-bold mr-1 pl-0 pr-0" style="position:absolute; top: 16px; right: 15px; width: 65px;">Logout</button>
     <div class="container-flex m-3 p-0">
         <button id="btn_create" class="btn btn-outline-success font-weight-bold m-0" data-toggle="modal" data-target="#myModal">+ New DR</button>
-        <input type="search" id="myInput" placeholder="Search.." style="text-align: center; font-weight: bold; color: black; width: 250px; display: inline-block; float: right" class="textinput textInput form-control" autofocus>
+        <input type="search" id="myInput" placeholder="Search.." style="text-align: center; font-weight: bold; color: black; width: 250px; display: inline-block; float: right;" class="textinput textInput form-control" autofocus>
         {% comment %} <select id="select_status" class="dropdown-primary  form-control font-weight-bold text-center text-dark mr-3" style="width: 150px; float:right;">
             <option value="OPEN" selected>OPEN</option>
             <option value="WAITING">WAITING</option>
@@ -41,6 +41,44 @@
                     
                     <!-- Modal footer -->
                     <div class="modal-footer">
+                            <input type="hidden" name="form_ctrl" value="new_dr">
+                            <button type="submit" class="btn btn-outline-success font-weight-bold" id="createdr">Create</button>
+                        </form>
+                        <button type="button" class="btn btn-outline-danger font-weight-bold" data-dismiss="modal">Close</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- The Modal -->
+        <div class="modal fade" id="myModalRename">
+            <br>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Rename Delivery Reciept (<span id="old_title" class="text-danger"></span>)</h4>
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form method="POST" autocomplete="off">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.date_created|as_crispy_field }}
+                                {{ form.control_no|as_crispy_field }}
+                                {{ form.customer|as_crispy_field }}
+                                {{ form.line|as_crispy_field }}
+                            </div>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                            <input type="hidden" name="form_ctrl" value="rename_dr">
+                            <input type="hidden" name="old_dr" id="old_dr" value="">
                             <button type="submit" class="btn btn-outline-success font-weight-bold" id="createdr">Create</button>
                         </form>
                         <button type="button" class="btn btn-outline-danger font-weight-bold" data-dismiss="modal">Close</button>
@@ -76,7 +114,9 @@
                         <a class="PIdd dropdown-item border border-top-0 border-left-0 border-right-0" href="{{ edit_url }}">Edit</a>
                         {% if dr.status == 'OPEN' %}
                             {% url 'kdeletedr' cnum=dr.control_no as delete_url %}
-                            <a class="PIdd dropdown-item border border-top-0 border-left-0 border-right-0 border-bottom-0" href="{{ delete_url }}">Delete</a>
+                            <button class="PIdd dropdown-item border border-top-0 border-left-0 border-right-0" onclick="rename_confirm('{{dr.control_no}}')">Rename</button>
+                            <button class="PIdd dropdown-item border border-top-0 border-left-0 border-right-0 border-bottom-0" onclick="delete_confirm('{{delete_url}}')">Delete</button>
+                            {% comment %} <a class="PIdd dropdown-item border border-top-0 border-left-0 border-right-0 border-bottom-0" href="{{ delete_url }}">Delete</a> {% endcomment %}
                         {% else %}
                             {% url 'kclosedr' cnum=dr.control_no as closedr_url %}
                             <a class="PIdd dropdown-item border border-top-0 border-left-0 border-right-0 border-bottom-0" href="{{ closedr_url }}">Close</a>
@@ -91,10 +131,53 @@
             {% endfor %}
              </tbody>
       </table>
+      <!-- The Modal -->
+      <div class="modal fade" id="myModalDelete" data-keyboard="false" data-backdrop="static">
+          <br><br><br><br><br><br><br><br>
+          <div class="modal-dialog modal-lg">
+              <div class="modal-content" >
+              
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                      <h4 class="modal-title">Delete Confirmation!</h4>
+                  </div>
+                  
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                      <div class="font-weight-bold text-dark" style="font-size:32px;" >Are you sure to <strong>Delete</strong> this DR?</div>
+                      
+                      
+                      
+                  </div>
+                      <div class="text-danger text-center p-0 m-0">*Please answer correctly.</div>
+                  <!-- Modal footer -->
+                  <div class="modal-footer text-center">
+                      <div class="mx-auto">
+                          <a type="button" class="btn btn-outline-success font-weight-bold" id="deletey" href="">YES</a>
+                          <span class="text-danger">or</span>
+                          <button type="button" class="btn btn-outline-danger font-weight-bold" data-dismiss="modal" id="deleten">NO</button>
+                      </div>
+                  </div>
+                  
+              </div>
+          </div>
+      </div>
     </div>
      <script>
-     
+        
+        function delete_confirm(urla) {
+          $('#myModalDelete').modal('show');
+          $('#deletey').attr("href", urla);
+        }
+        
+        function rename_confirm(dr_no) {
+          $('#myModalRename').modal('show');
+          $('#old_dr').val(dr_no);
+          $('#old_title').text(dr_no);
+        }
         $(document).ready(function() {
+            {% comment %} $('#id_line').val('LINE '); {% endcomment %}
+
             $("#btn_logout").click(function(){
                 window.location.href="{% url 'logout' %}";
             });
