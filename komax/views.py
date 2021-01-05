@@ -69,15 +69,21 @@ def KHomepage(request):
     return render(request, 'komax/home.html', context)
 
 def CloseDR(request, cnum):
-    olo = dr_form.objects.get(control_no=cnum)
-    olo.status = "CLOSED"
-    olo.save()
-    messages.success(request, f'{cnum}: Succesfully Closed!')
+    try:
+        olo = dr_form.objects.get(control_no=cnum)
+        olo.status = "CLOSED"
+        olo.save()
+        messages.success(request, f'{cnum}: Succesfully Closed!')
+    except:
+        messages.success(request, f'DR already Closed by another User!')
     return redirect('KHomepage')
 
 def DeleteDR(request, cnum):
-    dr_form.objects.get(control_no=cnum).delete()
-    messages.info(request, f'{cnum}: Succesfully deleted!')
+    try:
+        dr_form.objects.get(control_no=cnum).delete()
+        messages.info(request, f'{cnum}: Succesfully deleted!')
+    except:
+        messages.info(request, f'DR already Deleted by another User!')
     return redirect('KHomepage')
     
 def EditDR(request, cnum):
@@ -100,13 +106,22 @@ def EditDR(request, cnum):
                 form1.save()
                 return redirect(f'/komax/editdr/{cnum}')
     else:
-        form = NewDrForm(instance=dr_form.objects.get(control_no=cnum))
-        # form = NewDrForm(instance=dr_form.objects.filter(control_no=cnum).get(control_no=cnum))
-        form1 = NewDrItem()
+        try:
+            form = NewDrForm(instance=dr_form.objects.get(control_no=cnum))
+            # form = NewDrForm(instance=dr_form.objects.filter(control_no=cnum).get(control_no=cnum))
+            form1 = NewDrItem()
+        except:
+            return redirect('KHomepage')
+
+    if request.user.username == 'julia':
+        signed_by = "JOSIE AUTUS"
+    elif request.user.username == 'aurelio':
+        signed_by = "GLORIA PASTOR"
     context = {
         'form'  :   form,
         'form1' :   form1,
-        'items' :   dr_item.objects.filter(control_noFK=cnum).order_by('id')
+        'items' :   dr_item.objects.filter(control_noFK=cnum).order_by('id'),
+        'signed_by' : signed_by
     }
     return render(request, 'komax/dr.html', context)
 

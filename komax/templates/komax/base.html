@@ -10,11 +10,11 @@
         <link rel="stylesheet" type="text/css" href="{% static 'komax/style.css' %}" media="screen">
         <link rel="stylesheet" type="text/css" href="{% static 'komax/style1.css' %}" media="print">
         <link rel="icon" type="image/png" href="{% static 'komax/logo.gif' %}">
-        <title> &#65279; </title>
+        <title> {% block title %}{% endblock title %} | KOMAX </title>
     </head>
     <body class="bg"  onafterprint="afterPrint()" oncontextmenu="return false">
         <center>
-            <div id="block_containerLogo" class="border border-dark ml-3 mr-3 mt-2 pt-2 border-right-0 border-left-0 "> 
+            <div id="block_containerLogo" class="border border-dark ml-3 mr-3 mt-0 pt-0 border-right-0 border-left-0 border-top-0 "> 
                 <div id="bloc1Logo" class="align-top">
                     <div id="wrapD3Cube">
                         <div id="D3Cube">
@@ -36,7 +36,7 @@
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/overcast/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <!-- Popper JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <!-- Latest compiled JavaScript -->

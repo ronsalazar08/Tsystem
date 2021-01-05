@@ -1,9 +1,12 @@
 {% extends "komax/base.html" %}
 {% load crispy_forms_tags %}
+
+{% block title %}DR EDIT{% endblock title %}
+
 {% block content %}
 
         
-    <button id="btn_print" class="btn btn-outline-danger font-weight-bold mr-1 pl-0 pr-0" style="position:absolute; top: 16px; right: 16px; width: 65px;">Print</button>
+    <button id="btn_print" class="btn btn-outline-danger font-weight-bold mr-1 pl-0 pr-0" style="position:absolute; top: 5px; right: 16px; width: 65px;">Print</button>
     
     <div id="mainDrdiv" class="container-flex m-3 pl-1 pr-1 border border-dark rounded" style="height: 565px;">
 
@@ -31,7 +34,7 @@
                 </div>
         </div>
             <input type="hidden" name="form_ctrl" value="dr_form">
-            <button type="submit" class="btn btn-outline-primary font-weight-bold m-0" id="donedr" style="position: absolute; bottom: 30px; right: 23px;">Done</button>
+            <button type="submit" class="btn btn-outline-primary font-weight-bold m-0" id="donedr" style="position: absolute; bottom: 35px; right: 23px;">Done</button>
         </form>
         
          <table id="tabledr" class="scroll table table-bordered shadow-lg table-striped font-weight-bold table-hover p-0 mx-auto w-75">
@@ -141,11 +144,12 @@
                 </div>
             </div>
         </div>
-        <button id="btn_newItem" class="btn btn-outline-success font-weight-bold m-0" style="position: absolute; bottom: 30px; right: 95px;" data-toggle="modal" data-target="#myModal">+ Add</button>
+        <button id="btn_newItem" class="btn btn-outline-success font-weight-bold m-0" style="position: absolute; bottom: 35px; right: 95px;" data-toggle="modal" data-target="#myModal">+ Add</button>
     </div>
     <div id="remarks_div" style="display: none; position: absolute; top:305px; left:750px; font-size: 24px;"></div>
-    <div id="date_div" style="display: none; position: absolute; top:190px; left:780px; "></div>
-    <div id="customer_div" style="display: none; position: absolute; top:190px; left:120px;"></div>
+    <div id="date_div" style="display: none; position: absolute; top:184px; left:790px; "></div>
+    <div id="customer_div" style="display: none; position: absolute; top:184px; left:130px;"></div>
+    <div id="signature_div" style="display: none; position: absolute; top:500px; left:760px;">{{signed_by}}</div>
     
 
 
@@ -249,7 +253,7 @@
                 var datep =new Date($('#id_date_created').val());
                 var cusp =$("#id_customer").val() + " - " + $("#id_line").val();
                 $('#remarks_div').text("TOTAL: " + S);
-                $('#date_div').text(datep.getMonth()+1 + "-" + datep.getDate() + "-" + datep.getFullYear());
+                $('#date_div').text(('0' + (datep.getMonth()+1)).slice(-2) + "-" + ('0' + datep.getDate()).slice(-2) + "-" + datep.getFullYear());
                 $('#customer_div').text(cusp);
                 window.print();  
             });

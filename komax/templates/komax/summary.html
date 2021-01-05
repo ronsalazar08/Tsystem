@@ -1,7 +1,9 @@
 {% extends "komax/base.html" %}
 {% load crispy_forms_tags %}
+{% block title %}SUMMARY{% endblock title %}
+
 {% block content %}
-    <button id="btn_logout" class="btn btn-outline-danger font-weight-bold mr-1 pl-0 pr-0" style="position:absolute; top: 16px; right: 15px; width: 65px;">Logout</button>
+    <button id="btn_logout" class="btn btn-outline-danger font-weight-bold mr-1 pl-0 pr-0" style="position:absolute; top: 5px; right: 15px; width: 65px;">Logout</button>
     <div class="container-flex m-3 p-0">
 
       <table id="tablesum" class="text-center scroll table table-bordered shadow-lg table-striped font-weight-bold table-hover p-0 mx-auto w-75">

@@ -27,7 +27,7 @@
     table{
         position: absolute !important;
         top: 258px !important;
-        left: -72px !important;
+        left: -52px !important;
     }
     
     div{
@@ -35,7 +35,7 @@
     }
     
     @page {size: portrait}
-    #remarks_div, #customer_div, #date_div{
+    #remarks_div, #customer_div, #date_div, #signature_div{
         display: block !important;
     }
     #tabledr, #mainDrdiv{
