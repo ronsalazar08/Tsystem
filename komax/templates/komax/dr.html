@@ -8,7 +8,7 @@
         
     <button id="btn_print" class="btn btn-outline-danger font-weight-bold mr-1 pl-0 pr-0" style="position:absolute; top: 5px; right: 16px; width: 65px;">Print</button>
     
-    <div id="mainDrdiv" class="container-flex m-3 pl-1 pr-1 border border-dark rounded" style="height: 565px;">
+    <div id="mainDrdiv" class="container-flex m-3 pl-1 pr-1 border border-dark rounded" style="height: 565px; position: relative;">
 
         <form method="POST" autocomplete="off">
         <div class="row">
@@ -34,7 +34,7 @@
                 </div>
         </div>
             <input type="hidden" name="form_ctrl" value="dr_form">
-            <button type="submit" class="btn btn-outline-primary font-weight-bold m-0" id="donedr" style="position: absolute; bottom: 35px; right: 23px;">Done</button>
+            <button type="submit" class="btn btn-outline-primary font-weight-bold m-0" id="donedr" style="position: absolute; bottom: 10px; right: 5px;">Done</button>
         </form>
         
          <table id="tabledr" class="scroll table table-bordered shadow-lg table-striped font-weight-bold table-hover p-0 mx-auto w-75">
@@ -99,32 +99,32 @@
                             {% csrf_token %}
                             <div class="form-group" >
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         {{ form1.product_no|as_crispy_field }}
                                         {{ form1.wos_no|as_crispy_field }}
                                     </div>
-                                    <div class="col-6" id="controlDiv">
+                                    {% comment %} <div class="col-6" id="controlDiv"> {% endcomment %}
                                         {{ form1.control_noFK|as_crispy_field }}
-                                    </div>
+                                    {% comment %} </div> {% endcomment %}
                                 </div>
                                 <div class="row">
-                                    <div class="col-1">
+                                    <div class="col-3">
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-6">
                                         {{ form1.first_quantity|as_crispy_field }}
                                     </div>
-                                    <div class="col-2">
+                                    {% comment %} <div class="col-2"> {% endcomment %}
                                         {{ form1.second_quantity|as_crispy_field }}
-                                    </div>
-                                    <div class="col-2">
+                                    {% comment %} </div> {% endcomment %}
+                                    {% comment %} <div class="col-2"> {% endcomment %}
                                         {{ form1.third_quantity|as_crispy_field }}
-                                    </div>
-                                    <div class="col-2">
+                                    {% comment %} </div> {% endcomment %}
+                                    {% comment %} <div class="col-2"> {% endcomment %}
                                         {{ form1.fourth_quantity|as_crispy_field }}
-                                    </div>
-                                    <div class="col-2">
+                                    {% comment %} </div> {% endcomment %}
+                                    {% comment %} <div class="col-2"> {% endcomment %}
                                         {{ form1.fifth_quantity|as_crispy_field }}
-                                    </div>
+                                    {% comment %} </div> {% endcomment %}
                                     <div class="col-1">
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@
                 </div>
             </div>
         </div>
-        <button id="btn_newItem" class="btn btn-outline-success font-weight-bold m-0" style="position: absolute; bottom: 35px; right: 95px;" data-toggle="modal" data-target="#myModal">+ Add</button>
+        <button id="btn_newItem" class="btn btn-outline-success font-weight-bold m-0" style="position: absolute; bottom: 10px; right: 78px;" data-toggle="modal" data-target="#myModal">+ Add</button>
     </div>
     <div id="remarks_div" style="display: none; position: absolute; top:305px; left:750px; font-size: 24px;"></div>
     <div id="date_div" style="display: none; position: absolute; top:184px; left:790px; "></div>

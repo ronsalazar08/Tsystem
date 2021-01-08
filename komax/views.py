@@ -114,7 +114,7 @@ def EditDR(request, cnum):
             return redirect('KHomepage')
 
     if request.user.username == 'julia':
-        signed_by = "JOSIE AUTUS"
+        signed_by = "JOSIE AUTOS"
     elif request.user.username == 'aurelio':
         signed_by = "GLORIA PASTOR"
     context = {
@@ -182,7 +182,7 @@ def Summary(request, customerS, monS, yearS):
                                         (select customer from komax_dr_form where control_no = cn limit 1) AS customer,
                                         (select status from komax_dr_form where control_no = cn limit 1) AS status
                                     FROM komax_dr_item ) AS t
-                                WHERE t.customer = '{customerS}' AND t.date_created LIKE '{yearS}-{monS}%%' ORDER BY date_created;""")
+                                WHERE t.customer = '{customerS}' AND t.date_created LIKE '{yearS}-{monS}%%' ORDER BY cn, date_created;""")
     context = {
         'items': objs,
         'customerS' :   customerS,

@@ -22,32 +22,32 @@
                             {% csrf_token %}
                             <div class="form-group" >
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         {{ form1.product_no|as_crispy_field }}
                                         {{ form1.wos_no|as_crispy_field }}
                                     </div>
-                                    <div class="col-6" id="controlDiv">
+                                    {% comment %} <div class="col-6" id="controlDiv"> {% endcomment %}
                                         {{ form1.control_noFK|as_crispy_field }}
-                                    </div>
+                                    {% comment %} </div> {% endcomment %}
                                 </div>
                                 <div class="row">
-                                    <div class="col-1">
+                                    <div class="col-3">
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-6">
                                         {{ form1.first_quantity|as_crispy_field }}
                                     </div>
-                                    <div class="col-2">
+                                    {% comment %} <div class="col-2"> {% endcomment %}
                                         {{ form1.second_quantity|as_crispy_field }}
-                                    </div>
-                                    <div class="col-2">
+                                    {% comment %} </div> {% endcomment %}
+                                    {% comment %} <div class="col-2"> {% endcomment %}
                                         {{ form1.third_quantity|as_crispy_field }}
-                                    </div>
-                                    <div class="col-2">
+                                    {% comment %} </div> {% endcomment %}
+                                    {% comment %} <div class="col-2"> {% endcomment %}
                                         {{ form1.fourth_quantity|as_crispy_field }}
-                                    </div>
-                                    <div class="col-2">
+                                    {% comment %} </div> {% endcomment %}
+                                    {% comment %} <div class="col-2"> {% endcomment %}
                                         {{ form1.fifth_quantity|as_crispy_field }}
-                                    </div>
+                                    {% comment %} </div> {% endcomment %}
                                     <div class="col-1">
                                     </div>
                                 </div>
