@@ -189,6 +189,10 @@
      <script>
      
         $(document).ready(function() {
+            $('#btn_newItem').focus();
+            $('.modal').on('shown.bs.modal', function() {
+                $("#id_product_no").focus();
+            });
             $('#id_date_created').datepicker({
                 dateFormat: 'yy-mm-dd'
             });
