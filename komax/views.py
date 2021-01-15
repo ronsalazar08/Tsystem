@@ -161,7 +161,6 @@ def Summary(request, customerS, monS, yearS):
     customerS = customerS
     monS = monS
     yearS = yearS
-    
     objs = dr_item.objects.raw(f"""
                                 SELECT
                                     t.id,
