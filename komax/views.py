@@ -113,9 +113,9 @@ def EditDR(request, cnum):
         except:
             return redirect('KHomepage')
 
-    if request.user.username == 'julia':
+    if request.user.username == 'komaxa':
         signed_by = "JOSIE AUTOS"
-    elif request.user.username == 'aurelio':
+    elif request.user.username == 'komaxb':
         signed_by = "GLORIA PASTOR"
     context = {
         'form'  :   form,
